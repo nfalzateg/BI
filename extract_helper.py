@@ -64,25 +64,6 @@ def spotify_extract_init():
 
             album_list.append(album_elements)
 
-        id_list = []
-        name_list = []
-        url_list = []
-
-        for item in data['items']:
-            for key, value in item.items():
-                if key == "track":
-                    for point in value['artists']:
-                        # data_point = point
-                        id_list.append(point['id'])
-                        name_list.append(point['name'])
-                        url_list.append(point['external_urls']['spotify'])
-
-        artist_dict = {
-            'artist_id': id_list,
-            'artist_name': name_list,
-            'url_list': url_list
-        }
-
         album_df = pd.DataFrame.from_dict(album_list)
 
         with pd.option_context('display.max_rows', None, 'display.max_columns',
@@ -90,16 +71,13 @@ def spotify_extract_init():
             print(album_df)
 
         # Borrar duplicados
-        album_df = album_df.drop_duplicates(subset=['album_id'])
+        # album_df = album_df.drop_duplicates(subset=['album_id'])
 
         # Fechas
-        album_df['played_at'] = pd.to_datetime(album_df['played_at'], format='%Y-%m-%d %H:%m:%s')
+        # album_df['played_at'] = pd.to_datetime(album_df['played_at'], format='%Y-%m-%d %H:%m:%s')
 
         # print(album_df['played_at'])
 
         # fecha de carga, como conectarme a una base de datos postdre, subir codigo a github
-
-
-
 
 spotify_extract_init()
